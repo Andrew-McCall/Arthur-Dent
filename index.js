@@ -60,6 +60,24 @@ let db;
 
         console.log('Database connection established');
 
+
+        try {
+            const query = `
+                CREATE TABLE IF NOT EXISTS incidents (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    details TEXT,
+                    created_at BIGINT,
+					user TEXT
+                );
+            `;
+            
+            await db.run(query);
+            console.log('Incidents table created or already exists.');
+        } catch (error) {
+            console.error('Error creating incidents table:', error.message);
+        }
+
+
         // Login to Discord after database
         client.login(TOKEN);
     } catch (error) {
@@ -92,7 +110,7 @@ client.on(Events.InteractionCreate, async interaction => {
 	}
 
 	try {
-		await command.execute(interaction);
+		await command.execute(interaction, db);
 	} catch (error) {
 		console.error(error);
 		if (interaction.replied || interaction.deferred) {
