@@ -77,9 +77,7 @@ let db;
             console.error('Error creating incidents table:', error.message);
         }
 
-
-        // Login to Discord after database
-        client.login(TOKEN);
+		client.login(TOKEN)
     } catch (error) {
         console.error('Error connecting to the database:', error.message);
     }
