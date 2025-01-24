@@ -6,6 +6,6 @@ export default {
 		.setDescription('Test command.'),
 	async execute(interaction) {
 		count=count+1
-		await interaction.reply(count);
+		await interaction.reply(count+"poop");
 	},
 };
