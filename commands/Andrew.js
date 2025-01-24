@@ -5,6 +5,6 @@ export default {
 		.setName('andrew')
 		.setDescription('Test command.'),
 	async execute(interaction) {
-		await interaction.reply("`#Andrew sucks`");
+		await interaction.reply("`#Andrewsfault`");
 	},
 };
