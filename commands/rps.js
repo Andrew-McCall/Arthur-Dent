@@ -6,6 +6,6 @@ export default {
 		.setDescription('Rock Paper Scissors')
 		.addStringOption(option=>option.setName("blowjob").setDescription("are fun").setRequired(true)),
 	async execute(interaction) {
-		await interaction.reply("`Hello World.`"+interaction.options.getString("blowjob")+M);
+		await interaction.reply("`Hello World.`"+interaction.options.getString("blowjob"));
 	},
 };
