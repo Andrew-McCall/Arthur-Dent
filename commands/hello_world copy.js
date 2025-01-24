@@ -1,10 +1,11 @@
 import { SlashCommandBuilder } from 'discord.js';
-
+let count=0;
 export default {
 	data: new SlashCommandBuilder()
-		.setName('andrew')
+		.setName('count')
 		.setDescription('Test command.'),
 	async execute(interaction) {
-		await interaction.reply("`#Andrewsfault`");
+		count=count+1
+		await interaction.reply(count);
 	},
 };
