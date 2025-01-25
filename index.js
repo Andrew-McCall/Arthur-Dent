@@ -163,7 +163,8 @@ client.on(Events.MessageCreate, async (message) => {
         const combinedMessages = result.reverse().reduce((acc, curr) => {
             return acc + `\n[${curr.is_arthur ? "you (Arthur Dent)" : message.author.displayName}] ${curr.message}`;
         }, PROMPT);
-
+		
+		await message.channel.sendTyping();
         let ai;
         try {
             ai = await ollama.generate({
