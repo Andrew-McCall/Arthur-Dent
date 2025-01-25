@@ -21,13 +21,13 @@ export default {
             );
         }catch (error){
             console.error(error);
-            await interaction.reply('An error occurred while fetching the past messages.');
+            await interaction.reply('An error occurred while creating message.');
             return;
         }
 
         let result;
         try {
-            result = await db.get(`SELECT id, message, user, is_arthur FROM incidents WHERE user = ? ORDER BY ID DESC LIMIT 10`, [interaction.user.id]);
+            result = await db.get(`SELECT id, message, user, is_arthur FROM chat WHERE user = ? ORDER BY ID DESC LIMIT 10`, [interaction.user.id]);
         } catch (error) {
             console.error(error);
             await interaction.reply('An error occurred while fetching the past messages.');
@@ -65,10 +65,10 @@ export default {
             );
         }catch (error){
             console.error(error);
-            await interaction.reply('An error occurred while fetching the past messages.');
+            await interaction.reply('An error occurred while saving the thought.');
             return;
         }
 
-		await interaction.reply(ai.response);
+		await interaction.reply(`${interaction.user.displayName}: ${message}\n Arthur Dent: ${ai.response}`);
 	},
 };

@@ -71,18 +71,18 @@ const createTable = async (TABLE) => {
 		createTable(
 			`incidents (
 				id INTEGER PRIMARY KEY AUTOINCREMENT,
-				details TEXT,
-				created_at BIGINT,
-				user TEXT
+				details TEXT NOT NULL,
+				created_at BIGINT NOT NULL,
+				user TEXT NOT NULL
 			);`
 		)
 
 		createTable(
 			`chat (
 				id INTEGER PRIMARY KEY AUTOINCREMENT,
-				message TEXT,
-				user TEXT,
-				is_arthur BOOLEAN
+				message TEXT NOT NULL,
+				user TEXT NOT NULL,
+				is_arthur BOOLEAN NOT NULL
 			);`
 		)
 
