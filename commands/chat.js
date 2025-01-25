@@ -12,8 +12,8 @@ export default {
         ,
     
 	async execute(interaction, db) {
-        await interaction.defer()
-        
+        await interaction.deferReply()
+
         const message = interaction.options.getString("message")
 
         try {
