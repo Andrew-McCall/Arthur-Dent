@@ -4,6 +4,7 @@ import { open } from 'sqlite';
 import sqlite3 from 'sqlite3';
 import fs from 'node:fs';
 import path from 'node:path';
+import ollama from 'ollama'
 
 const { CLIENT_ID, GUILD_ID, DATABASE_PATH, TOKEN, PROMPT } = config;
 
