@@ -27,16 +27,16 @@ export default {
 
         let result;
         try {
-            result = await db.get(`SELECT FIRST 10 id, message, user, is_arthur FROM incidents WHERE user = ? ORDER BY ID DESC`, [interaction.user.id]);
+            result = await db.get(`SELECT id, message, user, is_arthur FROM incidents WHERE user = ? ORDER BY ID DESC LIMIT 10`, [interaction.user.id]);
         } catch (error) {
             console.error(error);
             await interaction.reply('An error occurred while fetching the past messages.');
             return;
         }
 
-        const combinedMessages = result.reduce((acc, curr) => {
+        const combinedMessages = result.reverse().reduce((acc, curr) => {
             return acc + `\n[${curr.is_arthur ? "you (Arthur Dent)" : interaction.user.displayName}] ${curr.message}`;
-        }, '');
+        }, PROMPT);
 
         let ai;
         try {
@@ -44,7 +44,7 @@ export default {
                 model:"llama3.2",
                 keep_alive:"1h",
                 stream:false,
-                prompt: PROMPT + combinedMessages
+                prompt: combinedMessages
             })
         } catch (error) {
             console.error(error);
