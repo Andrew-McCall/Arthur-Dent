@@ -1,4 +1,4 @@
-import config from './secret.json' assert { type: 'json' };
+import config from '../secret.json' assert { type: 'json' };
 import { SlashCommandBuilder } from 'discord.js';
 import ollama from 'ollama'
 
