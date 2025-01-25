@@ -7,7 +7,9 @@ const { PROMPT } = config;
 export default {
 	data: new SlashCommandBuilder()
 		.setName('chat')
-		.setDescription('Chat with Arthur Dent'),
+		.setDescription('Chat with Arthur Dent')
+        .addStringOption(o => o.setName("message").setDescription("What would you like to say to Arthur?").setRequired(true))
+        ,
     
 	async execute(interaction, db) {
         const message = interaction.options.getString("message")
