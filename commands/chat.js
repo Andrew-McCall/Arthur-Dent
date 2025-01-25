@@ -12,6 +12,8 @@ export default {
         ,
     
 	async execute(interaction, db) {
+        interaction.deferReply()
+
         const message = interaction.options.getString("message")
 
         try {
@@ -21,16 +23,16 @@ export default {
             );
         }catch (error){
             console.error(error);
-            await interaction.reply('An error occurred while creating message.');
+            await interaction.editReply('An error occurred while creating message.');
             return;
         }
 
         let result;
         try {
-            result = await db.get(`SELECT id, message, user, is_arthur FROM chat WHERE user = ? ORDER BY ID DESC LIMIT 10`, [interaction.user.id]);
+            result = await db.all(`SELECT id, message, user, is_arthur FROM chat WHERE user = ? ORDER BY ID DESC LIMIT 10`, [interaction.user.id]);
         } catch (error) {
             console.error(error);
-            await interaction.reply('An error occurred while fetching the past messages.');
+            await interaction.editReply('An error occurred while fetching the past messages.');
             return;
         }
 
@@ -48,13 +50,13 @@ export default {
             })
         } catch (error) {
             console.error(error);
-            await interaction.reply('An error occurred while thinking.');
+            await interaction.editReply('An error occurred while thinking.');
             return;
         }
 
         if (!ai.response){
             console.error(error);
-            await interaction.reply('An error occurred while thinking.');
+            await interaction.editReply('An error occurred while thinking.');
             return;
         }
         
@@ -65,10 +67,10 @@ export default {
             );
         }catch (error){
             console.error(error);
-            await interaction.reply('An error occurred while saving the thought.');
+            await interaction.editReply('An error occurred while saving the thought.');
             return;
         }
 
-		await interaction.reply(`${interaction.user.displayName}: ${message}\n Arthur Dent: ${ai.response}`);
+		await interaction.editReply(`${interaction.user.displayName}: ${message}\n Arthur Dent: ${ai.response}`);
 	},
 };
