@@ -50,36 +50,45 @@ const rest = new REST().setToken(TOKEN);
 
 let db;
 
+const createTable = async (TABLE) => {
+	await db.run("CREATE TABLE IF NOT EXISTS "+TABLE);
+	console.log(TABLE.split(" ")[0]+': Table created or already exists.');
+}
+
 // Initialize Database Connection
 (async () => {
     try {
+		console.log("Connecting to database")
+
         db = await open({
             filename: DATABASE_PATH,
             driver: sqlite3.cached.Database,
-        });
+        })
 
-        console.log('Database connection established');
+        console.log('Database connection established')
 
+		console.log("Creating Tables")
+		createTable(
+			`incidents (
+				id INTEGER PRIMARY KEY AUTOINCREMENT,
+				details TEXT,
+				created_at BIGINT,
+				user TEXT
+			);`
+		)
 
-        try {
-            const query = `
-                CREATE TABLE IF NOT EXISTS incidents (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    details TEXT,
-                    created_at BIGINT,
-					user TEXT
-                );
-            `;
-            
-            await db.run(query);
-            console.log('Incidents table created or already exists.');
-        } catch (error) {
-            console.error('Error creating incidents table:', error.message);
-        }
+		createTable(
+			`chat (
+				id INTEGER PRIMARY KEY AUTOINCREMENT,
+				message TEXT,
+				user TEXT,
+				is_arthur BOOLEAN
+			);`
+		)
 
 		client.login(TOKEN)
     } catch (error) {
-        console.error('Error connecting to the database:', error.message);
+        console.error('Error Starting:', error.message)
     }
 })();
 
