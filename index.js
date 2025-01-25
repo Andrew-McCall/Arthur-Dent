@@ -5,12 +5,12 @@ import sqlite3 from 'sqlite3';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const { CLIENT_ID, GUILD_ID, DATABASE_PATH, TOKEN } = config;
+const { CLIENT_ID, GUILD_ID, DATABASE_PATH, TOKEN, PROMPT } = config;
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const foldersPath = path.join(__dirname, 'commands');
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages] });
 
 const commands = [];
 client.commands = new Map();
@@ -127,3 +127,74 @@ client.on(Events.InteractionCreate, async interaction => {
 		}
 	}
 });
+
+
+client.on(Events.MessageCreate, async (message) => {
+	if (message.author.bot) return;
+  	if (message.reference) {
+	  const repliedToMessage = await message.channel.messages.fetch(message.reference.messageId);
+	  if (repliedToMessage.author.id === client.user.id) {
+        const msg = message.content
+		await message.channel.sendTyping();
+		
+        try {
+            await db.run(
+                'INSERT INTO chat (message, user, is_arthur) VALUES (?, ?, ?)',
+                [msg, message.author.id, false]
+            );
+        }catch (error){
+            console.error(error);
+            await message.reply('An error occurred while creating message.');
+            return;
+        }
+
+        let result;
+        try {
+            result = await db.all(`SELECT id, message, user, is_arthur FROM chat WHERE user = ? ORDER BY ID DESC LIMIT 10`, [message.author.id]);
+        } catch (error) {
+            console.error(error);
+            await message.reply('An error occurred while fetching the past messages.');
+            return;
+        }
+
+		result.push({message: repliedToMessage.content, is_arthur:true})
+
+        const combinedMessages = result.reverse().reduce((acc, curr) => {
+            return acc + `\n[${curr.is_arthur ? "you (Arthur Dent)" : message.author.displayName}] ${curr.message}`;
+        }, PROMPT);
+
+        let ai;
+        try {
+            ai = await ollama.generate({
+                model:"llama3.2",
+                keep_alive:"1h",
+                stream:false,
+                prompt: combinedMessages
+            })
+        } catch (error) {
+            console.error(error);
+            await message.reply('An error occurred while thinking.');
+            return;
+        }
+
+        if (!ai.response){
+            console.error(error);
+            await message.reply('An error occurred while thinking.');
+            return;
+        }
+        
+        try {
+            await db.run(
+                'INSERT INTO chat (message, user, is_arthur) VALUES (?, ?, ?)',
+                [ai.response, message.author.id, true]
+            );
+        }catch (error){
+            console.error(error);
+            await message.reply('An error occurred while saving the thought.');
+            return;
+        }
+
+		await message.reply(ai.response || ".");
+	  }
+	}
+  });
