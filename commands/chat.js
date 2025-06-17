@@ -1,8 +1,7 @@
-import config from '../secret.json' assert { type: 'json' };
 import { SlashCommandBuilder } from 'discord.js';
 import ollama from 'ollama'
 
-const { PROMPT } = config;
+const { PROMPT } = global.config;
 
 export default {
 	data: new SlashCommandBuilder()

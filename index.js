@@ -1,10 +1,15 @@
 import { Client, Events, GatewayIntentBits, REST, Routes, MessageFlags } from 'discord.js';
-import config from './secret.json' assert { type: 'json' };
 import { open } from 'sqlite';
 import sqlite3 from 'sqlite3';
 import fs from 'node:fs';
 import path from 'node:path';
 import ollama from 'ollama'
+import { readFileSync } from 'fs';
+
+const data = readFileSync('./.secret.json', 'utf-8');
+const config = JSON.parse(data);
+
+global.config = config
 
 const { CLIENT_ID, GUILD_ID, DATABASE_PATH, TOKEN, PROMPT } = config;
 
