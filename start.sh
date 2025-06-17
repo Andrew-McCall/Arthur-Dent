@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#!/bin/bash
-
 SESSION="discord"
 
 tmux has-session -t $SESSION 2>/dev/null
