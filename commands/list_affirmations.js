@@ -16,7 +16,7 @@ export default {
         .setMinValue(1)
     )
     .addStringOption(opt =>
-      opt.addChoices(["simple", "debug", "ping"])
+      opt.addChoices(["simple", "debug", "debug_ping"])
         .setName("list")
         .setDescription("Display all database infomation?")
     ),
@@ -28,7 +28,7 @@ export default {
     }
 
     const is_simple = interaction.options.getString("list") == "simple"
-    const does_ping = interaction.options.getString("list") == "ping"
+    const is_pinging = interaction.options.getString("list") == "debug_ping"
 
     const offset = (page - 1) * pageSize;
 
@@ -64,7 +64,7 @@ export default {
     const affirmationList = affirmations
       .map((a, i) => (is_simple
         ?
-        `**${a.id}.** [${format(new Date(a.created_at), "yy-MM-dd")}/${a.used_at ? format(new Date(a.created_at), "yy-MM-dd") : "*never*"}] \`${a.affirmation}\` <${does_ping ? "@" : ""}${a.author}>`
+        `**${a.id}.** [${format(new Date(a.created_at), "yy-MM-dd")}/${a.used_at ? format(new Date(a.created_at), "yy-MM-dd") : "*never*"}] \`${a.affirmation}\` <${is_pinging ? "@" : ""}${a.author}>`
         :
         `**${a.id}** \`${a.affirmation}\``))
       .join('\n');
