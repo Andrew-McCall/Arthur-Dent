@@ -1,6 +1,5 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { format } from 'date-fns';
-import { A } from 'ollama/dist/shared/ollama.67ec3cf9.mjs';
 
 const pageSize = 20;
 
