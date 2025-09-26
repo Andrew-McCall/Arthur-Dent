@@ -1,7 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
-import config from '../secret.json' assert { type: 'json' };
 
-const { AFFIRMATION_USERS } = config;
+const { AFFIRMATION_USERS } = global.config;
 
 export default {
   data: new SlashCommandBuilder()
@@ -23,7 +22,7 @@ export default {
 
     try {
       await db.run(
-        'INSERT INTO affirmations (affirmation, author, created_at, used_at) VALUES (?)',
+        'INSERT INTO affirmations (affirmation, author, created_at, used_at) VALUES (?, ?, ?, ?)',
         [affirmation, interaction.user.id, Date.now(), -1]
       );
     } catch (error) {
