@@ -53,7 +53,7 @@ export default {
     }
 
     const affirmationList = affirmations
-      .map((a, i) => `**${a.id}.** <@${a.author}> [${format(new Date(a.created_at), "YYMMdd")}/${a.used_at ? format(new Date(a.created_at), "YYMMdd") : "*never*"}] \`${a.affirmation}\``)
+      .map((a, i) => `**${a.id}.** [${format(new Date(a.created_at), "YY-MM-dd")}/${a.used_at ? format(new Date(a.created_at), "YY-MM-dd") : "*never*"}] \`${a.affirmation}\` <${a.author}>`)
       .join('\n');
 
     await interaction.reply({
