@@ -67,8 +67,8 @@ export default {
 
     const affirmationList = affirmations
       .map((a, i) => (is_simple
-        ? `**${a.id}** \`${a.affirmation}\``
-        : `**${a.id}.** [${format(new Date(a.created_at), "yy-MM-dd")}/${a.used_at ? format(new Date(a.created_at), "yy-MM-dd") : "*never*"}] \`${a.affirmation}\` <${is_pinging ? "@" : ""}${a.author}>`
+        ? `*${a.id}.* \`${a.affirmation}\``
+        : `*${a.id}.* [${format(new Date(a.created_at), "yy-MM-dd")}/${a.used_at ? format(new Date(a.created_at), "yy-MM-dd") : "*never*"}] \`${a.affirmation}\` <${is_pinging ? "@" : ""}${a.author}>`
       ))
       .join('\n');
 
