@@ -283,12 +283,6 @@ client.on(Events.MessageCreate, async (message) => {
                 return acc + `\n[${curr.is_arthur ? "you (Arthur Dent)" : message.author.displayName}] ${curr.message}`;
             }, PROMPT);
 
-<<<<<<< HEAD
-		await message.reply(ai.response || ".");
-	  }
-	}
-  });
-=======
             await message.channel.sendTyping();
             let ai;
             try {
@@ -325,4 +319,3 @@ client.on(Events.MessageCreate, async (message) => {
         }
     }
 });
->>>>>>> 8790dbd (Affirmations)

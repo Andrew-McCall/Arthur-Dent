@@ -34,8 +34,7 @@ export default {
     let result;
     try {
       result = await db.get(
-        'SELECT COUNT(*) as "COUNT" FROM affirmations WHERE affirmation = ?',
-        [affirmation]
+        'SELECT COUNT(id) as affirmation_count FROM affirmations',
       );
     } catch (error) {
       console.error(error);
@@ -43,7 +42,7 @@ export default {
       return;
     }
 
-    await interaction.reply(`Affirmation saved successfully. Total affirmations: ${result.COUNT}`);
+    await interaction.reply(`Affirmation saved successfully. Total affirmations: ${result.affirmation_count}`);
   }
 
 };
