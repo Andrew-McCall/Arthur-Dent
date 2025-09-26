@@ -15,9 +15,14 @@ export default {
         .setMinValue(1)
     )
     .addStringOption(opt =>
-      opt.addChoices(["simple", "debug", "debug_ping"])
+      opt
         .setName("list")
-        .setDescription("Display all database infomation?")
+        .setDescription("Display all database information?")
+        .addChoices(
+          { name: "Simple", value: "simple" },
+          { name: "Debug", value: "debug" },
+          { name: "Debug Ping", value: "debug_ping" }
+        )
     ),
   async execute(interaction, db) {
     const page = interaction.options.getNumber("page") || 1;
