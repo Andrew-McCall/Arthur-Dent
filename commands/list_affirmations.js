@@ -16,7 +16,7 @@ export default {
     )
     .addStringOption(opt =>
       opt
-        .setName("list")
+        .setName("view")
         .setDescription("Display all database information?")
         .addChoices(
           { name: "Simple", value: "simple" },
@@ -31,8 +31,9 @@ export default {
       return;
     }
 
-    const is_simple = interaction.options.getString("list") == "simple"
-    const is_pinging = interaction.options.getString("list") == "debug_ping"
+    const view = interaction.options.getString("view") || "simple"
+    const is_simple = (view == "simple")
+    const is_pinging = (view == "debug_ping")
 
     const offset = (page - 1) * pageSize;
 
