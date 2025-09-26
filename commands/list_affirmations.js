@@ -53,11 +53,11 @@ export default {
     }
 
     const affirmationList = affirmations
-      .map((a, i) => `**${offset + i + 1}.** <@${a.author}> (${format(new Date(a.created_at), "yyyy-mm-dd")}/${a.used_at ? format(new Date(a.created_at), "yyyy-mm-dd") : "*never*"}) ${a.affirmation}`)
+      .map((a, i) => `**${a.id}.** <@${a.author}> [${format(new Date(a.created_at), "YYMMdd")}/${a.used_at ? format(new Date(a.created_at), "YYMMdd") : "*never*"}] \`${a.affirmation}\``)
       .join('\n');
 
     await interaction.reply({
-      content: `**Affirmations Page ${page}/${Math.ceil(totalResult.affirmation_count / pageSize)}** (Total: ${totalResult.affirmation_count})\n\`\`\`\n${affirmationList}\n\`\`\``
+      content: `**Affirmations Page ${page}/${Math.ceil(totalResult.affirmation_count / pageSize)}** (Total: ${totalResult.affirmation_count})\n\n${affirmationList}\n`
     });
   }
 };
