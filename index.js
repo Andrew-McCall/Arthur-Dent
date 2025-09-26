@@ -187,7 +187,7 @@ client.once(Events.ClientReady, (readyClient) => {
                 const canvas = createCanvas(affirmation_image.width, 300);
                 const ctx = canvas.getContext('2d');
 
-                ctx.drawImage(image, 0, Math.floor(-100 + Math.random() * 100));
+                ctx.drawImage(affirmation_image, 0, Math.floor(-100 + Math.random() * 100));
 
                 ctx.fillStyle = '#36454F'; // charcoal hex
                 ctx.font = '36px "Dancing Script"';
