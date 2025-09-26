@@ -1,5 +1,6 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { format } from 'date-fns';
+import { A } from 'ollama/dist/shared/ollama.67ec3cf9.mjs';
 
 const pageSize = 20;
 
@@ -13,6 +14,11 @@ export default {
         .setDescription("Page Number (starting from 1)")
         .setRequired(false)
         .setMinValue(1)
+    )
+    .addStringOption(opt =>
+      opt.addChoices(["simple", "debug", "ping"])
+        .setName("list")
+        .setDescription("Display all database infomation?")
     ),
   async execute(interaction, db) {
     const page = interaction.options.getNumber("page") || 1;
@@ -20,6 +26,9 @@ export default {
       await interaction.reply("Invalid Page Number");
       return;
     }
+
+    const is_simple = interaction.options.getString("list") == "simple"
+    const does_ping = interaction.options.getString("list") == "ping"
 
     const offset = (page - 1) * pageSize;
 
@@ -53,7 +62,11 @@ export default {
     }
 
     const affirmationList = affirmations
-      .map((a, i) => `**${a.id}.** [${format(new Date(a.created_at), "yy-MM-dd")}/${a.used_at ? format(new Date(a.created_at), "yy-MM-dd") : "*never*"}] \`${a.affirmation}\` <${a.author}>`)
+      .map((a, i) => (is_simple
+        ?
+        `**${a.id}.** [${format(new Date(a.created_at), "yy-MM-dd")}/${a.used_at ? format(new Date(a.created_at), "yy-MM-dd") : "*never*"}] \`${a.affirmation}\` <${does_ping ? "@" : ""}${a.author}>`
+        :
+        `**${a.id}** \`${a.affirmation}\``))
       .join('\n');
 
     await interaction.reply({
