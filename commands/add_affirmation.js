@@ -20,7 +20,18 @@ export default {
       return;
     }
 
+
     try {
+      const exists = await db.get(
+        'SELECT id FROM affirmations WHERE affirmation = ?',
+        [affirmation]
+      );
+
+      if (exists) {
+        await interaction.reply('This affirmation already exists in the database.');
+        return;
+      }
+
       await db.run(
         'INSERT INTO affirmations (affirmation, author, created_at, used_at) VALUES (?, ?, ?, ?)',
         [affirmation, interaction.user.id, Date.now(), -1]
@@ -42,7 +53,7 @@ export default {
       return;
     }
 
-    await interaction.reply(`Affirmation saved successfully. Total affirmations: ${result.affirmation_count}`);
+    await interaction.reply(`Affirmation saved successfully.\n\`${affirmation}\`\nTotal affirmations: ${result.affirmation_count}`);
   }
 
 };
