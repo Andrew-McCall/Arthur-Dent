@@ -16,7 +16,7 @@ import { differenceInHours } from 'date-fns';
 const affirmation_image = await loadImage('./affirmation_template.jpg');
 registerFont("./dancing-script/Dancing Script.ttf", { family: 'Dancing Script' });
 
-const { CLIENT_ID, GUILD_ID, DATABASE_PATH, TOKEN, PROMPT, AFFIRMATION_CHANNEL } = config;
+const { CLIENT_ID, GUILD_ID, DATABASE_PATH, TOKEN, PROMPT, AFFIRMATION_CHANNEL, AFFIRMATION_ROLE } = config;
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const foldersPath = path.join(__dirname, 'commands');
@@ -205,7 +205,7 @@ client.once(Events.ClientReady, (readyClient) => {
                     ]
                 };
 
-                await interaction.reply({ files: attachment.files });
+                await channel.send({ content: `<@&${AFFIRMATION_ROLE}>`, files: attachment.files });
             } catch (error) {
                 console.error(error);
                 return
