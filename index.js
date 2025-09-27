@@ -194,7 +194,7 @@ client.once(Events.ClientReady, (readyClient) => {
 
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                wrapText(ctx, result.affirmation, canvas.width / 2, canvas.height / 2, 550, 45);
+                wrapText(ctx, result.affirmation, canvas.width / 2, canvas.height / 2, Math.floor(canvas.width * 0.8), 45);
 
                 const attachment = {
                     files: [
