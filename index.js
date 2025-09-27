@@ -184,17 +184,17 @@ client.once(Events.ClientReady, (readyClient) => {
                     throw Error("Unable to find affirmation channel. Please check AFFIRMATION_CHANNEL in the config file.")
                 }
 
-                const canvas = createCanvas(affirmation_image.width, 300);
+                const canvas = createCanvas(affirmation_image.width, affirmation_image.height - 1);
                 const ctx = canvas.getContext('2d');
 
                 ctx.drawImage(affirmation_image, 0, Math.floor(-100 + Math.random() * 100));
 
-                ctx.fillStyle = '#36454F'; // charcoal hex
-                ctx.font = 'Bold 40px "Dancing Script"';
+                ctx.fillStyle = '#36454B'; // charcoal hex
+                ctx.font = 'Bold 80px "Dancing Script"';
 
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                wrapText(ctx, result.affirmation, canvas.width / 2, canvas.height / 2, Math.floor(canvas.width * 0.8), 45);
+                wrapText(ctx, result.affirmation, canvas.width / 2, (canvas.height / 2 - 45), Math.floor(canvas.width * 0.8), 90);
 
                 const attachment = {
                     files: [
