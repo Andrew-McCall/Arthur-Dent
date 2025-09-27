@@ -190,11 +190,11 @@ client.once(Events.ClientReady, (readyClient) => {
                 ctx.drawImage(affirmation_image, 0, Math.floor(-100 + Math.random() * 100));
 
                 ctx.fillStyle = '#36454F'; // charcoal hex
-                ctx.font = '36px "Dancing Script"';
+                ctx.font = 'Bold 40px "Dancing Script"';
 
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                wrapText(ctx, result.affirmation, canvas.width / 2, canvas.height / 2, 500, 45);
+                wrapText(ctx, result.affirmation, canvas.width / 2, canvas.height / 2, 550, 45);
 
                 const attachment = {
                     files: [
