@@ -187,14 +187,19 @@ client.once(Events.ClientReady, (readyClient) => {
                 const canvas = createCanvas(affirmation_image.width, affirmation_image.height - 1);
                 const ctx = canvas.getContext('2d');
 
-                ctx.drawImage(affirmation_image, 0, Math.floor(-100 + Math.random() * 100));
+                ctx.drawImage(affirmation_image, 0, 0);
 
-                ctx.fillStyle = '#36454B'; // charcoal hex
+                ctx.fillStyle = '#352A36'; // charcoal hex
                 ctx.font = 'Bold 80px "Dancing Script"';
 
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 wrapText(ctx, result.affirmation, canvas.width / 2, (canvas.height / 2 - 45), Math.floor(canvas.width * 0.8), 90);
+
+
+                ctx.fillStyle = 'rgba(53, 42, 54, 0.45)'; // 50% alpha
+                ctx.font = 'Bold 40px "Dancing Script"';
+                ctx.fillText(`${result.id} - ${format(now, "dd/MM/yy")}`, 60, canvas.height - 60);
 
                 const attachment = {
                     files: [
