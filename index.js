@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import ollama from 'ollama'
 import { readFileSync } from 'fs';
+import {format} from "date-fns"
 
 const data = readFileSync('./.secret.json', 'utf-8');
 const config = JSON.parse(data);
@@ -162,7 +163,7 @@ client.once(Events.ClientReady, (readyClient) => {
         }
 
         const now = new Date();
-
+        
         if ((now.getTime() - last_affirmation) > 86100000 && (now.getHours() === 9) && (now.getMinutes() === 0)) {
             try {
                 const result = await db.get(
@@ -199,7 +200,7 @@ client.once(Events.ClientReady, (readyClient) => {
                 ctx.textAlign = 'left';
                 ctx.fillStyle = 'rgba(53, 42, 54, 0.45)'; // 50% alpha
                 ctx.font = 'Bold 40px "Dancing Script"';
-                ctx.fillText(`${result.id} - ${format(now, "dd/MM/yy")}`, 60, canvas.height - 60);
+                ctx.fillText(`${result.id} - ${format(now, "dd/MM/yy")}`, canvas.width - 60, canvas.height - 60);
 
                 const attachment = {
                     files: [
