@@ -197,10 +197,10 @@ client.once(Events.ClientReady, (readyClient) => {
                 ctx.textBaseline = 'middle';
                 wrapText(ctx, result.affirmation, canvas.width / 2, (canvas.height / 2 - 45), Math.floor(canvas.width * 0.8), 90);
 
-                ctx.textAlign = 'left';
+                ctx.textAlign = 'right';
                 ctx.fillStyle = 'rgba(53, 42, 54, 0.45)'; // 50% alpha
-                ctx.font = 'Bold 40px "Dancing Script"';
-                ctx.fillText(`${result.id} - ${format(now, "dd/MM/yy")}`, canvas.width - 60, canvas.height - 60);
+                ctx.font = 'Bold 36px "Dancing Script"';
+                ctx.fillText(`${result.id} - ${format(now, "dd/MM/yy")}`, canvas.width - 44, canvas.height - 44);
 
                 const attachment = {
                     files: [
